@@ -36,6 +36,7 @@ const closeMenu = () => {
           <router-link to="/" @click="closeMenu">Đến trang Welcome</router-link>
           <router-link to="/hello" @click="closeMenu">Đến trang HelloWorld</router-link>
           <router-link to="/login" @click="closeMenu">Login</router-link>
+          <router-link to="/demobutton" @click="closeMenu">Demo Button</router-link>
           <!-- Thêm các link khác nếu cần -->
         </nav>
       </aside>
