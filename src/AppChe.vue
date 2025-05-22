@@ -24,19 +24,26 @@ const closeMenu = () => {
       <span v-else>&#9776;</span> <!-- Icon Hamburger (mở) -->
     </button>
 
+    <!-- Overlay để đóng menu khi click ra ngoài và làm mờ nền -->
+    <transition name="fade">
+      <div v-if="isMenuOpen" class="overlay" @click="closeMenu"></div>
+    </transition>
+
     <!-- Sidebar Menu với Transition -->
     <transition name="slide-menu">
       <aside v-if="isMenuOpen" class="sidebar">
         <nav class="main-nav">
           <router-link to="/" @click="closeMenu">Đến trang Welcome</router-link>
           <router-link to="/hello" @click="closeMenu">Đến trang HelloWorld</router-link>
+          <router-link to="/login" @click="closeMenu">Login</router-link>
+          <router-link to="/demobutton" @click="closeMenu">Demo Button</router-link>
           <!-- Thêm các link khác nếu cần -->
         </nav>
       </aside>
     </transition>
 
     <!-- Nội dung chính của trang -->
-    <main class="main-content" :class="{ 'menu-open': isMenuOpen }">
+    <main class="main-content">
       <router-view />
     </main>
   </div>
@@ -117,18 +124,30 @@ const closeMenu = () => {
 /* Nội dung chính */
 .main-content {
   padding: 20px;
-  padding-top: 70px; /* Đảm bảo nội dung không bị che bởi nút toggle ban đầu */
-  transition: margin-left 0.3s ease-in-out, padding-left 0.3s ease-in-out; /* Hiệu ứng mượt khi đẩy nội dung */
-  margin-left: 0; /* Mặc định khi menu đóng */
-  /* Nếu nút toggle không di chuyển, bạn có thể cần thêm padding-left khi menu đóng để nội dung không bị che */
-  /* padding-left: 60px; */ /* Ví dụ: 15px (left của nút) + 30px (width nút) + 15px (khoảng cách) */
+  padding-top: 70px; /* Đảm bảo nội dung không bị che bởi nút toggle cố định ở trên */
+  /* Không cần transition cho margin-left nữa */
 }
 
-/* Khi menu mở, đẩy nội dung chính sang phải */
-.main-content.menu-open {
-  margin-left: 250px; /* Phải bằng với chiều rộng của sidebar */
-  /* Nếu nút toggle không di chuyển, padding-left có thể giữ nguyên hoặc điều chỉnh nếu cần */
-  /* padding-left: 20px; */ /* Reset padding-left nếu không cần nữa */
+/* Overlay Style */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5); /* Màu đen mờ */
+  z-index: 999; /* Dưới sidebar (1000) và nút toggle (1100) nhưng trên nội dung */
+}
+
+/* CSS cho Transition của Overlay (Fade) */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease-in-out;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
 }
 
 /* CSS cho Transition của Sidebar */
