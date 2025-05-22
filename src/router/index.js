@@ -3,7 +3,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 // Ví dụ: nếu HelloWorld.vue nằm trong src/components/HelloWorld.vue
 import HelloWorld from '../components/HelloWorld.vue'
 import TheWelcome from '../components/TheWelcome.vue' // Tương tự, kiểm tra đường dẫn cho TheWelcome.vue
-
+import Login from '../components/Login.vue'
 
 const routes = [
   {
@@ -17,6 +17,11 @@ const routes = [
     component: HelloWorld
   },
   // Bạn có thể thêm các routes khác ở đây
+   {
+      path: '/login',
+      name: 'Login',
+      component: Login
+    },
 
 ]
 
